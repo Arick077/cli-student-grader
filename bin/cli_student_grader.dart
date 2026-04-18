@@ -35,7 +35,30 @@ void main () {
         switch(choices)
         {
             case 1:
-                print("Add Student");
+                String? name;
+
+                while (name == null || name.trim().isEmpty) {
+                  print("Enter student name:");
+                  name = stdin.readLineSync();
+
+                  if (name == null || name.trim().isEmpty) {
+                    print("Name cannot be empty!");
+                  }
+                }
+
+                var student = {
+                  "name": name,
+                  "scores": [],
+                  "subjects": {...subjects},
+                  "bonus": null,
+                  "comment": null
+                };
+
+                students.add(student);
+                print("Student '$name' added successfully!");
+
+
+                
                 break;
             case 2:
                 print("Record Score");
