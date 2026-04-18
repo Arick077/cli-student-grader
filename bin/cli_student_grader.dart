@@ -93,7 +93,38 @@ void main () {
                 print("Score added successfully!");
                 break;
             case 3:
-                print("Add Bonus Points");
+                if (students.isEmpty) {
+                    print("No students available!");
+                    break;
+                  }
+
+                  for (int i = 0; i < students.length; i++) {
+                    print("${i + 1}. ${students[i]["name"]}");
+                  }
+
+                  print("Select student:");
+                  int index = int.tryParse(stdin.readLineSync() ?? '') ?? -1;
+
+                  if (index < 1 || index > students.length) {
+                    print("Invalid!");
+                    break;
+                  }
+
+                  var student = students[index - 1];
+
+                  int bonus = -1;
+                  while (bonus < 1 || bonus > 10) {
+                    print("Enter bonus (1–10):");
+                    bonus = int.tryParse(stdin.readLineSync() ?? '') ?? -1;
+                  }
+
+                  if (student["bonus"] == null) {
+                    student["bonus"] ??= bonus;
+                    print("Bonus added!");
+                  } else {
+                    print("Bonus already exists!");
+                  }
+
                 break;
             case 4:
                 print("Add Comment");
