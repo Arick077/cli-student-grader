@@ -57,11 +57,40 @@ void main () {
                 students.add(student);
                 print("Student '$name' added successfully!");
 
-
-                
                 break;
             case 2:
-                print("Record Score");
+                if (students.isEmpty) {
+                  print("No students available!");
+                  break;
+                }
+
+                for (int i = 0; i < students.length; i++) {
+                  print("${i + 1}. ${students[i]["name"]}");
+                }
+
+                print("Select student number:");
+                int index = int.tryParse(stdin.readLineSync() ?? '') ?? -1;
+
+                if (index < 1 || index > students.length) {
+                  print("Invalid selection!");
+                  break;
+                }
+
+                var student = students[index - 1];
+
+                int score = -1;
+
+                while (score < 0 || score > 100) {
+                  print("Enter score (0–100):");
+                  score = int.tryParse(stdin.readLineSync() ?? '') ?? -1;
+
+                  if (score < 0 || score > 100) {
+                    print("Invalid score! Must be between 0 and 100.");
+                  }
+                }
+
+                student["scores"].add(score);
+                print("Score added successfully!");
                 break;
             case 3:
                 print("Add Bonus Points");
