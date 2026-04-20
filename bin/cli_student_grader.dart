@@ -170,7 +170,24 @@ void main () {
 
                 break;
             case 5:
-                print("View All Students");
+              //View All Students
+              
+              if (students.isEmpty) {
+                print("No students available!");
+                break;
+              }
+
+              print("\n=== Student List ===");
+
+              for (var student in students) {
+                var tags = [
+                  student["name"],
+                  "${student["scores"].length} scores",
+                  if (student["bonus"] != null) "⭐ Has Bonus",
+                ];
+
+                print(tags.join(" | "));
+              }
                 break;
             case 6:
                 print("View Report Card");
