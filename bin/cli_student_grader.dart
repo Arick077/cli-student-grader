@@ -35,6 +35,7 @@ void main () {
         switch(choices)
         {
             case 1:
+            //Add Student
                 String? name;
 
                 while (name == null || name.trim().isEmpty) {
@@ -59,6 +60,7 @@ void main () {
 
                 break;
             case 2:
+            //Record Score
                 if (students.isEmpty) {
                   print("No students available!");
                   break;
@@ -93,6 +95,7 @@ void main () {
                 print("Score added successfully!");
                 break;
             case 3:
+            //Add Bonus Points
                 if (students.isEmpty) {
                     print("No students available!");
                     break;
@@ -127,7 +130,44 @@ void main () {
 
                 break;
             case 4:
-                print("Add Comment");
+            //Add Comment
+                if (students.isEmpty) {
+                  print("No students available!");
+                  break;
+                }
+
+                for (int i = 0; i < students.length; i++) {
+                  print("${i + 1}. ${students[i]["name"]}");
+                }
+
+                print("Select student:");
+                int index = int.tryParse(stdin.readLineSync() ?? '') ?? -1;
+
+                if (index < 1 || index > students.length) {
+                  print("Invalid!");
+                  break;
+                }
+
+                var student = students[index - 1];
+
+                String? comment;
+
+                while (comment == null || comment.trim().isEmpty) {
+                  print("Enter comment:");
+                  comment = stdin.readLineSync();
+
+                  if (comment != null) {
+                    comment = comment.trim();
+                  }
+
+                  if (comment == null || comment.isEmpty) {
+                    print("Comment cannot be empty!");
+                  }
+                }
+
+                student["comment"] = comment;
+                print("Comment added successfully!");
+
                 break;
             case 5:
                 print("View All Students");
