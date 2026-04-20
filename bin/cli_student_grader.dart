@@ -171,7 +171,7 @@ void main () {
                 break;
             case 5:
               //View All Students
-              
+
               if (students.isEmpty) {
                 print("No students available!");
                 break;
@@ -190,7 +190,88 @@ void main () {
               }
                 break;
             case 6:
-                print("View Report Card");
+              //View Report Card
+              if (students.isEmpty) {
+                print("No students available!");
+                break;
+              }
+
+              for (int i = 0; i < students.length; i++) {
+                print("${i + 1}. ${students[i]["name"]}");
+              }
+
+              print("Select student:");
+              int index = int.tryParse(stdin.readLineSync() ?? '') ?? -1;
+
+              if (index < 1 || index > students.length) {
+                print("Invalid!");
+                break;
+              }
+
+              var student = students[index - 1];
+             List<int> scores = List<int>.from(student["scores"]);
+
+              if (scores.isEmpty) {
+                print("No scores available for this student!");
+                break;
+              }
+
+             
+              int sum = 0;
+              for (int i = 0; i < scores.length; i++) {
+                sum += scores[i];
+              }
+
+              double rawAvg = sum / scores.length;
+
+              
+              double finalAvg = rawAvg + (student["bonus"] ?? 0);
+
+              
+              if (finalAvg > 100) finalAvg = 100;
+
+              
+              String grade;
+              if (finalAvg >= 90) {
+                grade = "A";
+              } else if (finalAvg >= 80) {
+                grade = "B";
+              } else if (finalAvg >= 70) {
+                grade = "C";
+              } else if (finalAvg >= 60) {
+                grade = "D";
+              } else {
+                grade = "F";
+              }
+
+              
+              String commentDisplay =
+                  student["comment"]?.toUpperCase() ?? "No comment provided";
+
+              
+              String feedback = switch (grade) {
+                "A" => "Outstanding performance!",
+                "B" => "Good work, keep it up!",
+                "C" => "Satisfactory. Room to improve.",
+                "D" => "Needs improvement.",
+                "F" => "Failing. Please seek help.",
+                _ => "Unknown grade."
+              };
+
+              // 🧾 Report Card UI
+              print('''
+            ╔══════════════════════════════════════════╗
+            ║       REPORT CARD                        ║
+            ╠══════════════════════════════════════════║
+            ║  Name:    ${student["name"]}             ║
+            ║  Scores:  ${student["scores"]}           ║
+            ║  Bonus:   ${student["bonus"] != null ? "+${student["bonus"]}" : "No bonus"}      ║
+            ║  Average: ${finalAvg.toStringAsFixed(1)} ║
+            ║  Grade:   $grade                         ║
+            ║  Comment: $commentDisplay                ║
+            ╚══════════════════════════════════════════╝
+            Feedback: $feedback
+            ''');
                 break;
             case 7:
                 print("Class Summary");
