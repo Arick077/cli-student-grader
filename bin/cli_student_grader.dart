@@ -274,7 +274,89 @@ void main () {
             ''');
                 break;
             case 7:
-                print("Class Summary");
+              //Class Summary
+              
+                if (students.isEmpty) {
+                  print("No students available!");
+                  break;
+                }
+
+                int totalStudents = students.length;
+
+                double totalAvg = 0;
+                double highest = 0;
+                double lowest = double.infinity;
+
+                int countedStudents = 0;
+                int passCount = 0;
+
+                Set<String> uniqueGrades = {};
+
+                for (var s in students) {
+                  List<int> scores = List<int>.from(s["scores"]);
+
+                  if (scores.isEmpty) continue;
+
+                  int sum = 0;
+                  for (int i = 0; i < scores.length; i++) {
+                    sum += scores[i];
+                  }
+
+                  double avg = sum / scores.length;
+
+                  avg += (s["bonus"] ?? 0);
+
+                  if (avg > 100) avg = 100;
+
+                  countedStudents++;
+                  totalAvg += avg;
+
+                  if (avg > highest) highest = avg;
+                  if (avg < lowest) lowest = avg;
+
+                  String grade;
+                  if (avg >= 90) {
+                    grade = "A";
+                  } else if (avg >= 80) {
+                    grade = "B";
+                  } else if (avg >= 70) {
+                    grade = "C";
+                  } else if (avg >= 60) {
+                    grade = "D";
+                  } else {
+                    grade = "F";
+                  }
+
+                  if (scores.isNotEmpty && avg >= 60) {
+                    passCount++;
+                  }
+
+                  uniqueGrades.add(grade);
+                }
+
+                double classAvg =
+                    countedStudents > 0 ? totalAvg / countedStudents : 0;
+
+                var summaryLines = [
+                  for (var s in students)
+                    "${s["name"]}: ${s["scores"].length} scores"
+                ];
+
+                print('''
+              ===== CLASS SUMMARY =====
+              Total Students: $totalStudents
+              Students With Scores: $countedStudents
+              Class Average: ${classAvg.toStringAsFixed(1)}
+              Highest Average: ${countedStudents > 0 ? highest.toStringAsFixed(1) : "N/A"}
+              Lowest Average: ${countedStudents > 0 ? lowest.toStringAsFixed(1) : "N/A"}
+              Passing Students: $passCount
+
+              Unique Grades: $uniqueGrades
+
+              --- Student Overview ---
+              ${summaryLines.join("\n")}
+              ========================
+              ''');
                 break;
             case 8:
                 print("Exit");
